@@ -1,78 +1,85 @@
+import React from 'react';
+
 import {
- View,
- Text,
- TouchableOpacity,
- StyleSheet
-}
-from 'react-native';
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet
+} from 'react-native';
 
 export default function DashboardScreen({
- navigation
+  navigation
 }: any) {
 
- return (
+  return (
 
-  <View style={styles.container}>
+    <View style={styles.container}>
 
-   <Text style={styles.title}>
-    Dashboard
-   </Text>
+      <Text style={styles.title}>
+        Dashboard
+      </Text>
 
-   <TouchableOpacity
-    style={styles.card}
-    onPress={() =>
-     navigation.navigate(
-      'Produtos'
-     )
-    }
-   >
+      <TouchableOpacity
+        style={styles.card}
+        onPress={() =>
+          navigation.navigate(
+            'Produtos'
+          )
+        }
+      >
 
-    <Text>
-      Produtos
-    </Text>
+        <Text style={styles.cardText}>
+          Produtos
+        </Text>
 
-   </TouchableOpacity>
+      </TouchableOpacity>
 
-   <TouchableOpacity
-    style={styles.card}
-    onPress={() =>
-     navigation.navigate(
-      'Solicitacoes'
-     )
-    }
-   >
+      <TouchableOpacity
+        style={styles.card}
+        onPress={() =>
+          navigation.navigate(
+            'Solicitacoes'
+          )
+        }
+      >
 
-    <Text>
-      Solicitações
-    </Text>
+        <Text style={styles.cardText}>
+          Solicitações
+        </Text>
 
-   </TouchableOpacity>
+      </TouchableOpacity>
 
-  </View>
+    </View>
 
- );
+  );
 
 }
 
 const styles = StyleSheet.create({
 
- container: {
-  flex:1,
-  padding:20
- },
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#f5f7fa'
+  },
 
- title: {
-  fontSize:28,
-  fontWeight:'bold',
-  marginBottom:20
- },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 20
+  },
 
- card: {
-  backgroundColor:'#fff',
-  padding:20,
-  borderRadius:12,
-  marginBottom:15,
-  elevation:3
- }
+  card: {
+    backgroundColor: '#ffffff',
+    padding: 20,
+    borderRadius: 12,
+    marginBottom: 15,
+    elevation: 3
+  },
+
+  cardText: {
+    fontSize: 18,
+    fontWeight: '600'
+  }
 
 });
