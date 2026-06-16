@@ -1,101 +1,112 @@
-import {
- View,
- Text,
- FlatList,
- StyleSheet
-}
-from 'react-native';
+import React, {
+  useEffect,
+  useState
+} from 'react';
 
 import {
- useEffect,
- useState
-}
-from 'react';
+  View,
+  Text,
+  FlatList,
+  StyleSheet
+} from 'react-native';
 
-import {
- productService
-}
-from '../services/productService';
+import { productService } from '../services/productService';
 
 export default function ProductsScreen() {
 
- const [products, setProducts] =
- useState<any[]>([]);
+  const [products, setProducts] =
+    useState<any[]>([]);
 
- useEffect(() => {
+  useEffect(() => {
 
-  loadProducts();
+    loadProducts();
 
- }, []);
+  }, []);
 
- async function loadProducts() {
+  async function loadProducts() {
 
-  const data =
-   await productService.getAll();
+    try {
 
-  setProducts(data);
+      const data =
+        await productService.getAll();
 
- }
+      setProducts(data);
 
- return (
+    } catch (error) {
 
-  <View style={styles.container}>
+      console.error(error);
 
-   <Text style={styles.title}>
-    Produtos
-   </Text>
-
-   <FlatList
-    data={products}
-    keyExtractor={(item) =>
-      item.id.toString()
     }
-    renderItem={({ item }) => (
+  }
 
-     <View style={styles.card}>
+  return (
 
-      <Text style={styles.name}>
-       {item.name}
+    <View style={styles.container}>
+
+      <Text style={styles.title}>
+        Produtos
       </Text>
 
-      <Text>
-       Estoque: {item.quantity}
-      </Text>
+      <FlatList
+        data={products}
+        keyExtractor={(item) =>
+          item.id.toString()
+        }
+        renderItem={({ item }) => (
 
-     </View>
+          <View style={styles.card}>
 
-    )}
-   />
+            <Text style={styles.name}>
+              {item.name}
+            </Text>
 
-  </View>
+            <Text>
+              Estoque: {item.quantity}
+            </Text>
 
- );
+            {item.minimumStock && (
+              <Text>
+                Estoque Mínimo: {item.minimumStock}
+              </Text>
+            )}
+
+          </View>
+
+        )}
+      />
+
+    </View>
+
+  );
 
 }
 
 const styles = StyleSheet.create({
 
- container:{
-  flex:1,
-  padding:20
- },
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#f5f7fa'
+  },
 
- title:{
-  fontSize:28,
-  fontWeight:'bold',
-  marginBottom:20
- },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 20
+  },
 
- card:{
-  backgroundColor:'#fff',
-  padding:15,
-  borderRadius:10,
-  marginBottom:10
- },
+  card: {
+    backgroundColor: '#ffffff',
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 10,
+    elevation: 2
+  },
 
- name:{
-  fontWeight:'bold',
-  fontSize:18
- }
+  name: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: 5
+  }
 
 });
