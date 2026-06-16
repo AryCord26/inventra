@@ -1,0 +1,15 @@
+node_modules
+
+.expo
+
+.expo-shared
+
+dist
+
+npm-debug.log*
+
+.env
+
+android
+
+ios
