@@ -1,0 +1,180 @@
+import {
+ View,
+ Text,
+ FlatList,
+ TextInput,
+ TouchableOpacity,
+ StyleSheet
+}
+from 'react-native';
+
+import {
+ useState,
+ useEffect
+}
+from 'react';
+
+import {
+ requestService
+}
+from '../services/requestService';
+
+export default function RequestsScreen() {
+
+ const [requests, setRequests] =
+ useState<any[]>([]);
+
+ const [productId, setProductId] =
+ useState('');
+
+ const [quantity, setQuantity] =
+ useState('');
+
+ useEffect(() => {
+
+  loadRequests();
+
+ }, []);
+
+ async function loadRequests() {
+
+  const data =
+   await requestService.getAll();
+
+  setRequests(data);
+
+ }
+
+ async function createRequest() {
+
+  await requestService.create({
+
+   productId:
+    Number(productId),
+
+   quantity:
+    Number(quantity)
+
+  });
+
+  setProductId('');
+  setQuantity('');
+
+  loadRequests();
+
+ }
+
+ return (
+
+  <View style={styles.container}>
+
+   <Text style={styles.title}>
+    Solicitações
+   </Text>
+
+   <TextInput
+    style={styles.input}
+    placeholder="ID Produto"
+    value={productId}
+    onChangeText={setProductId}
+   />
+
+   <TextInput
+    style={styles.input}
+    placeholder="Quantidade"
+    value={quantity}
+    keyboardType="numeric"
+    onChangeText={setQuantity}
+   />
+
+   <TouchableOpacity
+    style={styles.button}
+    onPress={createRequest}
+   >
+
+    <Text style={styles.buttonText}>
+      Solicitar
+    </Text>
+
+   </TouchableOpacity>
+
+   <FlatList
+    data={requests}
+    keyExtractor={(item) =>
+      item.id.toString()
+    }
+    renderItem={({ item }) => (
+
+     <View style={styles.card}>
+
+      <Text>
+       Produto:
+       {' '}
+       {item.product?.name}
+      </Text>
+
+      <Text>
+       Quantidade:
+       {' '}
+       {item.quantity}
+      </Text>
+
+      <Text>
+       Status:
+       {' '}
+       {item.status}
+      </Text>
+
+     </View>
+
+    )}
+   />
+
+  </View>
+
+ );
+
+}
+
+const styles = StyleSheet.create({
+
+ container:{
+  flex:1,
+  padding:20
+ },
+
+ title:{
+  fontSize:28,
+  fontWeight:'bold',
+  marginBottom:20
+ },
+
+ input:{
+  borderWidth:1,
+  borderColor:'#ccc',
+  padding:12,
+  borderRadius:10,
+  marginBottom:10
+ },
+
+ button:{
+  backgroundColor:'#2563eb',
+  padding:15,
+  borderRadius:10,
+  marginBottom:20
+ },
+
+ buttonText:{
+  color:'#fff',
+  textAlign:'center',
+  fontWeight:'bold'
+ },
+
+ card:{
+  backgroundColor:'#fff',
+  padding:15,
+  borderRadius:10,
+  marginBottom:10
+ }
+
+});
