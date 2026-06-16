@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+
 import {
   View,
   Text,
@@ -6,120 +8,116 @@ import {
   StyleSheet
 } from 'react-native';
 
-import { useState } from 'react';
-
-import { useAuth }
-from '../hooks/useAuth';
+import { useAuth } from '../hooks/useAuth';
 
 export default function LoginScreen({
- navigation
+  navigation
 }: any) {
 
- const { login } =
- useAuth();
+  const { login } = useAuth();
 
- const [email, setEmail] =
- useState('');
+  const [email, setEmail] =
+    useState('');
 
- const [password, setPassword] =
- useState('');
+  const [password, setPassword] =
+    useState('');
 
- async function handleLogin() {
+  async function handleLogin() {
 
-  try {
+    try {
 
-   await login(
-    email,
-    password
-   );
+      await login(
+        email,
+        password
+      );
 
-   navigation.navigate(
-    'Dashboard'
-   );
+      navigation.navigate(
+        'Dashboard'
+      );
 
-  } catch {
+    } catch (error) {
 
-   alert(
-    'Credenciais inválidas'
-   );
+      alert(
+        'Credenciais inválidas'
+      );
 
+      console.error(error);
+    }
   }
 
- }
+  return (
 
- return (
+    <View style={styles.container}>
 
-  <View style={styles.container}>
+      <Text style={styles.title}>
+        Inventra
+      </Text>
 
-   <Text style={styles.title}>
-    Inventra
-   </Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+        autoCapitalize="none"
+      />
 
-   <TextInput
-    style={styles.input}
-    placeholder="Email"
-    value={email}
-    onChangeText={setEmail}
-   />
+      <TextInput
+        style={styles.input}
+        placeholder="Senha"
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
+      />
 
-   <TextInput
-    style={styles.input}
-    placeholder="Senha"
-    secureTextEntry
-    value={password}
-    onChangeText={setPassword}
-   />
+      <TouchableOpacity
+        style={styles.button}
+        onPress={handleLogin}
+      >
 
-   <TouchableOpacity
-    style={styles.button}
-    onPress={handleLogin}
-   >
+        <Text style={styles.buttonText}>
+          Entrar
+        </Text>
 
-    <Text style={styles.buttonText}>
-      Entrar
-    </Text>
+      </TouchableOpacity>
 
-   </TouchableOpacity>
+    </View>
 
-  </View>
-
- );
-
+  );
 }
 
 const styles = StyleSheet.create({
 
- container: {
-  flex:1,
-  justifyContent:'center',
-  padding:20
- },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 20
+  },
 
- title: {
-  fontSize:32,
-  fontWeight:'bold',
-  textAlign:'center',
-  marginBottom:30
- },
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 30
+  },
 
- input: {
-  borderWidth:1,
-  borderColor:'#ccc',
-  padding:12,
-  borderRadius:10,
-  marginBottom:15
- },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 12,
+    borderRadius: 10,
+    marginBottom: 15
+  },
 
- button: {
-  backgroundColor:'#2563eb',
-  padding:15,
-  borderRadius:10
- },
+  button: {
+    backgroundColor: '#2563eb',
+    padding: 15,
+    borderRadius: 10
+  },
 
- buttonText: {
-  color:'#fff',
-  textAlign:'center',
-  fontWeight:'bold'
- }
+  buttonText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontWeight: 'bold'
+  }
 
 });
