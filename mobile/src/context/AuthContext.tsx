@@ -1,23 +1,19 @@
-import {
+import React, {
   createContext,
   useState
 } from 'react';
 
-import AsyncStorage
-from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { authService }
-from '../services/authService';
+import { authService } from '../services/authService';
 
-export const AuthContext =
-createContext({} as any);
+export const AuthContext = createContext({} as any);
 
 export function AuthProvider({
   children
 }: any) {
 
-  const [user, setUser] =
-  useState(null);
+  const [user, setUser] = useState(null);
 
   async function login(
     email: string,
@@ -25,10 +21,10 @@ export function AuthProvider({
   ) {
 
     const response =
-    await authService.login(
-      email,
-      password
-    );
+      await authService.login(
+        email,
+        password
+      );
 
     await AsyncStorage.setItem(
       'token',
