@@ -1,59 +1,40 @@
-import {
- NavigationContainer
-}
-from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 
-import {
- createNativeStackNavigator
-}
-from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import LoginScreen
-from '../screens/LoginScreen';
+import LoginScreen from '../screens/LoginScreen';
+import DashboardScreen from '../screens/DashboardScreen';
+import ProductsScreen from '../screens/ProductsScreen';
+import RequestsScreen from '../screens/RequestsScreen';
 
-import DashboardScreen
-from '../screens/DashboardScreen';
-
-import ProductsScreen
-from '../screens/ProductsScreen';
-
-import RequestsScreen
-from '../screens/RequestsScreen';
-
-const Stack =
-createNativeStackNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function AppNavigator() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
 
- return (
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+        />
 
-  <NavigationContainer>
+        <Stack.Screen
+          name="Dashboard"
+          component={DashboardScreen}
+        />
 
-   <Stack.Navigator>
+        <Stack.Screen
+          name="Produtos"
+          component={ProductsScreen}
+        />
 
-    <Stack.Screen
-      name="Login"
-      component={LoginScreen}
-    />
+        <Stack.Screen
+          name="Solicitacoes"
+          component={RequestsScreen}
+        />
 
-    <Stack.Screen
-      name="Dashboard"
-      component={DashboardScreen}
-    />
-
-    <Stack.Screen
-      name="Produtos"
-      component={ProductsScreen}
-    />
-
-    <Stack.Screen
-      name="Solicitacoes"
-      component={RequestsScreen}
-    />
-
-   </Stack.Navigator>
-
-  </NavigationContainer>
-
- );
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }
