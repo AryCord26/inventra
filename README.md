@@ -68,11 +68,3 @@ inventra-web/
 - ✔️ Notificações automáticas de estoque baixo  
 
 ---
-
-## 🐛 Issues
-
-Encontrou um bug ou problema?
-
-Abra uma issue descrevendo o erro para que possamos melhorar o projeto.
-
-👉 https://github.com/seu-usuario/inventra-web/issues
