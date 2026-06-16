@@ -3,17 +3,20 @@
 import {
   createContext,
   useState,
-  useEffect
+  useEffect,
+  ReactNode
 } from 'react';
 
 import { authService } from '../services/authService';
 
 interface AuthContextType {
   user: any;
+
   login: (
     email: string,
     password: string
-  ) => Promise<void>;
+  ) => Promise<any>;
+
   logout: () => void;
 }
 
@@ -22,11 +25,13 @@ export const AuthContext =
     {} as AuthContextType
   );
 
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
 export function AuthProvider({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: AuthProviderProps) {
 
   const [user, setUser] =
     useState<any>(null);
@@ -40,7 +45,9 @@ export function AuthProvider({
 
       authService
         .profile()
-        .then(setUser)
+        .then((data) => {
+          setUser(data);
+        })
         .catch(() => {
           localStorage.removeItem('token');
         });
@@ -65,6 +72,8 @@ export function AuthProvider({
     );
 
     setUser(response.user);
+
+    return response.user;
   }
 
   function logout() {
@@ -79,7 +88,7 @@ export function AuthProvider({
       value={{
         user,
         login,
-        logout,
+        logout
       }}
     >
       {children}
